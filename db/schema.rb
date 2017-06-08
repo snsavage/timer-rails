@@ -10,10 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170608151405) do
+ActiveRecord::Schema.define(version: 20170608235644) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "intervals", force: :cascade do |t|
+    t.string "name"
+    t.integer "duration"
+    t.integer "order"
+    t.integer "repeat_id"
+    t.integer "routine_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "repeats", force: :cascade do |t|
+    t.integer "times"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "routines", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "link"
+    t.integer "times"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email"
