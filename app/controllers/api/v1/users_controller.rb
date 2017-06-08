@@ -10,6 +10,12 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def sign_in
+    user = User.find_by_email(user_params[:email])
+    if user && user.authenticate(user_params[:password])
+      render json: user, status: 201
+    else
+      render json: {}, status: 401
+    end
   end
 
   private
