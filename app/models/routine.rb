@@ -13,4 +13,9 @@
 #
 
 class Routine < ApplicationRecord
+  belongs_to :user
+  has_many :intervals
+
+  validates :name, :times, :user, presence: true
+  validates :times, numericality: { only_integer: true, greater_than: 0 }
 end

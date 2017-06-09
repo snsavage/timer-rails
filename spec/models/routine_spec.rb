@@ -15,5 +15,14 @@
 require 'rails_helper'
 
 RSpec.describe Routine, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should validate_presence_of :name }
+  it { should validate_presence_of :times }
+  it { should validate_presence_of :user }
+
+  it { should validate_numericality_of :times }
+
+  it { should belong_to :user }
+  it { should have_many :intervals }
+
+  it { should have_db_index :user_id }
 end
