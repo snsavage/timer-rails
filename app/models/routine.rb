@@ -18,4 +18,6 @@ class Routine < ApplicationRecord
 
   validates :name, :times, :user, presence: true
   validates :times, numericality: { only_integer: true, greater_than: 0 }
+
+  validates_associated :intervals
 end

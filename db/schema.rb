@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170609001835) do
+ActiveRecord::Schema.define(version: 20170609010902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 20170609001835) do
     t.integer "routine_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["repeat_id"], name: "index_intervals_on_repeat_id"
+    t.index ["routine_id"], name: "index_intervals_on_routine_id"
   end
 
   create_table "repeats", force: :cascade do |t|
