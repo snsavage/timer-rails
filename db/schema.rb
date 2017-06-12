@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170609001835) do
+ActiveRecord::Schema.define(version: 20170612212628) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "groups", force: :cascade do |t|
+    t.integer "routine_id"
+    t.integer "order", default: 1
+    t.integer "times", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["routine_id"], name: "index_groups_on_routine_id"
+  end
 
   create_table "routines", force: :cascade do |t|
     t.string "name"
