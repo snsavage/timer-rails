@@ -51,4 +51,3 @@ warm_up = Interval.create({
   name: "Cool Down",
   duration: 600
 })
-
