@@ -10,28 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170609010902) do
+ActiveRecord::Schema.define(version: 20170609001835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "intervals", force: :cascade do |t|
-    t.string "name"
-    t.integer "duration"
-    t.integer "order"
-    t.integer "repeat_id"
-    t.integer "routine_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["repeat_id"], name: "index_intervals_on_repeat_id"
-    t.index ["routine_id"], name: "index_intervals_on_routine_id"
-  end
-
-  create_table "repeats", force: :cascade do |t|
-    t.integer "times"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "routines", force: :cascade do |t|
     t.string "name"

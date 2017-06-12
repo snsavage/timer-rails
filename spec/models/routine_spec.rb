@@ -22,7 +22,6 @@ RSpec.describe Routine, type: :model do
   it { should validate_numericality_of :times }
 
   it { should belong_to :user }
-  it { should have_many :intervals }
 
   it { should have_db_index :user_id }
 end
