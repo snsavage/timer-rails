@@ -13,6 +13,8 @@
 class User < ApplicationRecord
   has_secure_password
 
+  has_many :routines
+
   validates :email, uniqueness: true
   validates :email, :first_name, presence: true
 

@@ -14,7 +14,8 @@
 
 class Routine < ApplicationRecord
   belongs_to :user
-  mas_many :groups
+  has_many :groups
+
 
   validates :name, :times, :user, presence: true
   validates :times, numericality: { only_integer: true, greater_than: 0 }
