@@ -11,4 +11,6 @@
 #
 
 class Group < ApplicationRecord
+  belongs_to :routine
+  has_many :intervals
 end

@@ -11,4 +11,5 @@
 #
 
 class Interval < ApplicationRecord
+  belongs_to :group
 end
