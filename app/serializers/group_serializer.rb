@@ -11,5 +11,7 @@
 #
 
 class GroupSerializer < ActiveModel::Serializer
+  has_many :intervals
+
   attributes :id, :order, :times
 end
