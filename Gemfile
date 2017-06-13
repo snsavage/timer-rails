@@ -31,6 +31,8 @@ group :test do
     git: 'https://github.com/thoughtbot/shoulda-matchers.git',
     branch: 'rails-5'
   gem "factory_girl_rails", "~> 4.0"
+  gem "faker"
+  gem "json-schema"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
