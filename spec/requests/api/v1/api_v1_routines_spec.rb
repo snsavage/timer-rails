@@ -3,13 +3,12 @@ require 'rails_helper'
 RSpec.describe "Api::V1::Routines", type: :request do
   describe '#index' do
     let(:url) { '/api/v1/routines' }
-    let(:headers) {
-      { 'Content-Type': 'application/json' }
-    }
 
-    context 'returns a json formated list of routines' do
+    context 'with a user returns a json formated list of routines' do
       before(:each) {
-        routines = create_list(:routine, 2)
+        user = create(:user)
+        headers = auth_headers(user)
+        routines = create_list(:routine, 2, user_id: user.id)
         get url, params: {}, headers: headers
       }
 

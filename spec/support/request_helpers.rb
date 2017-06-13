@@ -7,4 +7,22 @@ module Requests
     end
   end
 
+  module RequestHelpers
+    def headers
+      {
+        'Content-Type': 'application/json'
+      }
+    end
+
+    def auth_headers(user)
+      headers.merge({
+        'Authorization': "Bearer #{Auth.issue(user.jwt_payload)}"
+      })
+    end
+
+    def bad_auth_headers(user)
+      headers
+    end
+  end
+
 end
