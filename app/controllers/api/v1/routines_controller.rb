@@ -1,4 +1,6 @@
 class Api::V1::RoutinesController < ApplicationController
+  skip_before_action :authenticate, only: [:index]
+
   after_action :verify_authorized, except: [:index]
   after_action :verify_policy_scoped
 

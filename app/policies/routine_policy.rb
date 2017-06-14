@@ -17,7 +17,7 @@ class RoutinePolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      Routine.where(user_id: user.id)
+      Routine.where(user_id: user.id).or(Routine.where(public: true))
     end
   end
 

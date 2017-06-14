@@ -20,7 +20,7 @@ module Requests
       })
     end
 
-    def bad_auth_headers(user)
+    def bad_auth_headers
       headers
     end
   end

@@ -21,6 +21,8 @@ class ApplicationController < ActionController::API
       if user
         @current_user ||= user
       end
+    else
+      Guest.new
     end
   end
 
