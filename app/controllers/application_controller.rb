@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::API
+  include Pundit
 
   before_action :authenticate
   before_action :ensure_json_request

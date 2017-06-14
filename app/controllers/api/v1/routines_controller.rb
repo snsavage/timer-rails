@@ -1,8 +1,9 @@
 class Api::V1::RoutinesController < ApplicationController
-  # skip_before_action :authenticate
+  after_action :verify_authorized, except: [:index]
+  after_action :verify_policy_scoped
 
   def index
-    routines = Routine.all
+    routines = policy_scope(Routine)
     render json: routines, include: ['routine'], status: 200
   end
 
