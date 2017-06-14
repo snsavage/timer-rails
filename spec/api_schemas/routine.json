@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "require": ["routine"],
+  "properties": {
+    "routine": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "description",
+        "link",
+        "times",
+        "user_id",
+        "public",
+        "groups"
+      ],
+      "properties": {
+        "id": { "type": "integer" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "link": { "type": "string" },
+        "times": { "type": "integer" },
+        "user_id": { "type": "integer" },
+        "public": { "type": "boolean" },
+        "groups": {
+          "type" : "array",
+          "required": [
+            "id",
+            "order",
+            "times",
+            "intervals"
+          ],
+          "properties": {
+            "id": { "type": "integer" },
+            "order": { "type": "integer" },
+            "times": { "type": "integer" },
+            "intervals": {
+              "type" : "array",
+              "required": [
+                "id",
+                "name",
+                "order",
+                "duration"
+              ],
+              "properties": {
+                "id": { "type": "integer" },
+                "name": { "type": "string" },
+                "order": { "type": "integer" },
+                "duration": { "type": "integer" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -4,7 +4,7 @@ class RoutinePolicy < ApplicationPolicy
   end
 
   def show?
-    index?
+    index? || record.public?
   end
 
   def update?

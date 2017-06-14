@@ -6,6 +6,8 @@ class ApplicationController < ActionController::API
 
   respond_to :json
 
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   def ensure_json_request
     return if request.format == :json
     render :nothing => true, :status => 406
@@ -31,6 +33,10 @@ class ApplicationController < ActionController::API
   end
 
   private
+
+  def user_not_authorized
+    render json: {}, status: 403
+  end
 
   def token
     request.env["HTTP_AUTHORIZATION"].scan(/Bearer (.*)$/).flatten.last

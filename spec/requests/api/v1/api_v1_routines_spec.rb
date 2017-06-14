@@ -80,18 +80,47 @@ RSpec.describe "Api::V1::Routines", type: :request do
   describe '#show' do
     let(:url) { '/api/v1/routines' }
 
-    before(:each) {
+    context 'with a valid user' do
+      before(:each) {
+        @user = create(:user)
+        headers = auth_headers(@user)
+
+        routine = create(:routine, user_id: @user.id)
+        create(:routine)
+
+        get "#{url}/#{routine.id}", params: {}, headers: headers
+      }
+
+      it { expect(response.content_type).to eq("application/json") }
+      it { expect(response).to have_http_status(:ok) }
+      it { expect(response).to match_response_schema("routine") }
+      it { expect(json[:routine][:user_id]).to eq(@user.id) }
+    end
+
+    it 'does not show private routines form other users' do
       @user = create(:user)
       headers = auth_headers(@user)
 
       routine = create(:routine, user_id: @user.id)
-      create(:routine)
+      private_routine = create(:routine)
 
-      get "#{url}/#{routine.id}", params: {}, headers: headers
-    }
+      get "#{url}/#{private_routine.id}", params: {}, headers: headers
 
-    it { expect(response.content_type).to eq("application/json") }
-    it { expect(response).to have_http_status(:ok) }
-    it { expect(response).to match_response_schema("routine") }
+      expect(response.status).to eq(403)
+    end
+
+    it 'does show public routines from other users' do
+      @user = create(:user)
+      headers = auth_headers(@user)
+
+      routine = create(:routine, user_id: @user.id)
+      private_routine = create(:routine, public: true)
+
+      get "#{url}/#{private_routine.id}", params: {}, headers: headers
+
+      expect(response.content_type).to eq("application/json")
+      expect(response).to have_http_status(:ok)
+      expect(response).to match_response_schema("routine")
+    end
   end
 end
