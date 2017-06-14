@@ -2,7 +2,7 @@ class Api::V1::RoutinesController < ApplicationController
   skip_before_action :authenticate, only: [:index]
 
   after_action :verify_authorized, except: [:index]
-  after_action :verify_policy_scoped
+  after_action :verify_policy_scoped, except: [:show]
 
   def index
     routines = policy_scope(Routine)
@@ -11,6 +11,8 @@ class Api::V1::RoutinesController < ApplicationController
 
   def show
     routine = Routine.includes(:groups, :intervals).find(params[:id])
+    authorize routine
+
     render json: routine, include: ['groups.intervals'], status: 200
   end
 end

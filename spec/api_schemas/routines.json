@@ -9,13 +9,23 @@
       "uniqueItems": true,
       "items": {
         "type": "object",
+        "required": [
+          "id",
+          "name",
+          "description",
+          "link",
+          "times",
+          "user_id",
+          "public"
+        ],
         "properties": {
           "id": { "type": "integer" },
           "name": { "type": "string" },
           "description": { "type": "string" },
           "link": { "type": "string" },
           "times": { "type": "integer" },
-          "user_id": { "type": "integer" }
+          "user_id": { "type": "integer" },
+          "public": { "type": "boolean" }
         },
         "additionalProperties": false
       }

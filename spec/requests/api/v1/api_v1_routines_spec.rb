@@ -76,4 +76,22 @@ RSpec.describe "Api::V1::Routines", type: :request do
       end
     end
   end
+
+  describe '#show' do
+    let(:url) { '/api/v1/routines' }
+
+    before(:each) {
+      @user = create(:user)
+      headers = auth_headers(@user)
+
+      routine = create(:routine, user_id: @user.id)
+      create(:routine)
+
+      get "#{url}/#{routine.id}", params: {}, headers: headers
+    }
+
+    it { expect(response.content_type).to eq("application/json") }
+    it { expect(response).to have_http_status(:ok) }
+    it { expect(response).to match_response_schema("routine") }
+  end
 end

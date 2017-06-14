@@ -16,5 +16,5 @@ class RoutineSerializer < ActiveModel::Serializer
   has_many :groups
   has_many :intervals, through: :groups
 
-  attributes :id, :name, :description, :link, :times, :user_id
+  attributes :id, :name, :description, :link, :times, :user_id, :public
 end
