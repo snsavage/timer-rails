@@ -1,6 +1,6 @@
 user = User.create({
   first_name: "example",
-  email: "example@example.com",
+  email: "example2@example.com",
   password: "password"
 })
 
@@ -9,7 +9,8 @@ routine = Routine.create({
   name: "Tabata",
   description: "The hardest interval you've ever done!",
   link: "https://en.wikipedia.org/wiki/High-intensity_interval_training#Tabata_regimen",
-  times: 1
+  times: 1,
+  public: true
 })
 
 warm_up_group = Group.create({
