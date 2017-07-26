@@ -10,4 +10,14 @@ FactoryGirl.define do
     times 1
     user
   end
+
+  factory :group do
+    routine
+  end
+
+  factory :interval do
+    group
+    sequence(:name) { |n| "Interval #{n}" }
+    duration 10
+  end
 end

@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170614145611) do
+ActiveRecord::Schema.define(version: 20170714171721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "ar_internal_metadata", primary_key: "key", id: :string, force: :cascade do |t|
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "groups", force: :cascade do |t|
     t.integer "routine_id"
@@ -54,5 +60,15 @@ ActiveRecord::Schema.define(version: 20170614145611) do
     t.string "first_name"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
+
+
+  create_view :routine_durations,  sql_definition: <<-SQL
+      SELECT routines.id AS routine_id,
+      sum(((groups.times * intervals.duration) * routines.times)) AS total
+     FROM ((routines
+       JOIN groups ON ((routines.id = groups.routine_id)))
+       JOIN intervals ON ((groups.id = intervals.group_id)))
+    GROUP BY routines.id, routines.name;
+  SQL
 
 end

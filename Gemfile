@@ -13,6 +13,7 @@ gem 'responders'
 gem 'bcrypt', '~> 3.1.7'
 gem 'jwt'
 gem 'pundit'
+gem 'scenic'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
