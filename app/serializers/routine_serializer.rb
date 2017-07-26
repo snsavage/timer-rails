@@ -4,12 +4,13 @@
 #
 #  id          :integer          not null, primary key
 #  name        :string
-#  description :text
-#  link        :string
-#  times       :integer
+#  description :text             default(""), not null
+#  link        :string           default(""), not null
+#  times       :integer          default(1)
 #  user_id     :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  public      :boolean          default(FALSE)
 #
 
 class RoutineSerializer < ActiveModel::Serializer
