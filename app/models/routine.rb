@@ -22,6 +22,8 @@ class Routine < ApplicationRecord
   validates :name, :times, :user, presence: true
   validates :times, numericality: { only_integer: true, greater_than: 0 }
 
+  accepts_nested_attributes_for :groups
+
   def total_duration
     return 0 unless duration = routine_durations.first
 

@@ -12,6 +12,7 @@ FactoryGirl.define do
   end
 
   factory :group do
+    times 1
     routine
   end
 

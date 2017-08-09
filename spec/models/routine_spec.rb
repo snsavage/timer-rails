@@ -27,6 +27,8 @@ RSpec.describe Routine, type: :model do
 
   it { should have_db_index :user_id }
 
+  it { should accept_nested_attributes_for(:groups) }
+
   describe ".total_duration" do
     it "returns 0 with no groups or intervals" do
       routine = create(:routine)

@@ -13,4 +13,6 @@
 class Group < ApplicationRecord
   belongs_to :routine
   has_many :intervals
+
+  accepts_nested_attributes_for :intervals
 end

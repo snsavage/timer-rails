@@ -123,4 +123,82 @@ RSpec.describe "Api::V1::Routines", type: :request do
       expect(response).to match_response_schema("routine")
     end
   end
+
+  describe "#create" do
+    let(:url) { '/api/v1/routines' }
+
+    describe 'with a valid user' do
+      before(:each) {
+        @user = create(:user)
+        @headers = auth_headers(@user)
+      }
+
+      it 'creates a routine with no groups or intervals' do
+        routine = attributes_for(:routine)
+
+        expect do
+          post "#{url}", params: { routine: routine }.to_json, headers: @headers
+        end.to change { Routine.count }.by 1
+        expect(response.status).to eq(201)
+      end
+
+      it 'creates a routine with groups' do
+        routine = attributes_for(:routine)
+        group = attributes_for(:group)
+
+        params = {
+          routine: routine.merge(groups_attributes: [group, group] )
+        }
+
+        post "#{url}", params: params.to_json, headers: @headers
+
+        expect(response.status).to eq(201)
+        expect(Routine.count).to eq 1
+        expect(Routine.first.groups.count).to eq 2
+      end
+
+      it 'create a routine with groups and intervals' do
+        routine = attributes_for(:routine)
+        group = attributes_for(:group)
+        interval = attributes_for(:interval)
+
+        group_params = group.merge({
+          intervals_attributes: [interval, interval]
+        })
+
+        params = {
+          routine: routine.merge(
+            groups_attributes: [group_params, group_params]
+          )
+        }
+
+        post "#{url}", params: params.to_json, headers: @headers
+
+        expect(response.status).to eq(201)
+        expect(Routine.count).to eq 1
+        expect(Routine.first.groups.count).to eq 2
+        expect(Routine.first.groups.first.intervals.count).to eq 2
+        expect(Routine.first.groups.second.intervals.count).to eq 2
+      end
+
+      describe "with invalid input" do
+        it "returns a with a 400 status code" do
+          params = { routine: { name: "" } }
+
+          post "#{url}", params: params.to_json, headers: @headers
+
+          expect(response.status).to eq(400)
+        end
+      end
+    end
+
+    describe "without a user" do
+      it "requires an authenticated user" do
+        routine = attributes_for(:routine)
+
+        post "#{url}", params: { routine: routine }.to_json, headers: headers
+        expect(response.status).to eq(401)
+      end
+    end
+  end
 end

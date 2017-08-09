@@ -14,7 +14,7 @@ class ApplicationController < ActionController::API
   end
 
   def logged_in?
-    !!current_user
+    !!current_user && !guest?
   end
 
   def current_user
@@ -50,4 +50,7 @@ class ApplicationController < ActionController::API
     !!request.env.fetch("HTTP_AUTHORIZATION", "").scan(/Bearer/).flatten.first
   end
 
+  def guest?
+    current_user.is_a? Guest
+  end
 end
