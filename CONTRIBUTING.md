@@ -1,14 +1,14 @@
-## Rails Timer Contributing Guide
+# Timer Rails Contributing Guide
 
-Contributions to the Rails Timer project are welcomed!
+Contributions to the Timer Rails project are welcomed!
 
 ## Issues
-If you find an issue with the Rails Timer app, please check GitHub issues for an exiting issue submission at [https://github.com/snsavage/rails-timer/issues](https://github.com/snsavage/rails-timer/issues).  If no existing issue is found, please submit a new issue.  Please provide a clear explanation of the issue you found with any relevant background information, for example what steps will reproduce the issue.
+If you find an issue with the Timer Rails app, please check GitHub issues for an exiting issue submission at [https://github.com/snsavage/timer-rails/issues](https://github.com/snsavage/timer-rails/issues).  If no existing issue is found, please submit a new issue.  Please provide a clear explanation of the issue you found with any relevant background information, for example what steps will reproduce the issue.
 
 ## Pull Requests
-If you would like to contribute code to the Rails Timer project, please submit a [Pull Request](https://github.com/snsavage/rails-timer/pulls).  To submit a pull request:
+If you would like to contribute code to the Timer Rails project, please submit a [Pull Request](https://github.com/snsavage/timer-rails/pulls).  To submit a pull request:
 
-* Fork the Rails Timer GitHub repository.
+* Fork the Timer Rails GitHub repository.
 * Make changes on your fork.  Please provide descriptive comments in your commit messages.  Please review [this document](http://chris.beams.io/posts/git-commit/) for more information about structuring your commit messages.
 * Open a new pull request.
 

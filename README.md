@@ -2,8 +2,8 @@
 
 Timer Rails provides the API for my Timer React project.  Timer Rails is currently a work in progress.
 
-Timer Rails was created as a project for the (Flatiron School's Online Web
-Developer Program)[https://flatironschool.com/programs/online-web-developer-career-course/].
+Timer Rails was created as a project for the [ Flatiron School's Online Web
+Developer Program ](https://flatironschool.com/programs/online-web-developer-career-course).
 
 ## Setup
 
@@ -26,7 +26,7 @@ $ rake db:migrate RAILS_ENV=test
 $ rails server
 ```
 
-Seed data is available by running rake db:seed.
+Seed data is available by running `rake db:seed`.
 
 ## Testing
 
@@ -54,4 +54,3 @@ Please contact [snsavage@snsavage.com](mailto:snsavage@snsavage.com).
 ## License
 
 Rails Timer is released on the [MIT License](./LICENSE).
-License
