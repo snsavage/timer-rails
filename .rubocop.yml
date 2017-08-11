@@ -1,0 +1,35 @@
+Rails:
+  Enabled: true
+
+AllCops:
+  Include:
+    - Rakefile
+    - config.ru
+    - lib/**/*.rake
+  Exclude:
+    - db/schema.rb
+    - config/initializers/**.rb
+    - config/environments/**.rb
+    - db/migrate/**.rb
+    - config/puma.rb
+    - bin/spring
+    - bin/*
+    - config/*
+    - spec/rails_helper.rb
+    - spec/spec_helper.rb
+  DisplayCopNames: true
+
+Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - "**/*_spec.rb"
+    - "spec/factories.rb"
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+

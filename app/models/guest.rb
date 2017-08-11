@@ -1,5 +1,5 @@
 class Guest
-   def id
-     nil
-   end
+  def id
+    nil
+  end
 end

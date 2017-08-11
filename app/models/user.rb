@@ -19,6 +19,6 @@ class User < ApplicationRecord
   validates :email, :first_name, presence: true
 
   def jwt_payload
-    {id: id, email: email, first_name: first_name}
+    { id: id, email: email, first_name: first_name }
   end
 end

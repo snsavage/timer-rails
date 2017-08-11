@@ -10,26 +10,25 @@ class ApplicationController < ActionController::API
 
   def ensure_json_request
     return if request.format == :json
-    render :nothing => true, :status => 406
+    render nothing: true, status: 406
   end
 
   def logged_in?
-    !!current_user && !guest?
+    !current_user.nil? && !guest?
   end
 
   def current_user
     if auth_present?
       user = User.find(auth["id"])
-      if user
-        @current_user ||= user
-      end
+
+      @current_user ||= user if user
     else
       Guest.new
     end
   end
 
   def authenticate
-    render json: {error: "unauthorized"}, status: 401 unless logged_in?
+    render json: { error: "unauthorized" }, status: 401 unless logged_in?
   end
 
   private
@@ -47,7 +46,13 @@ class ApplicationController < ActionController::API
   end
 
   def auth_present?
-    !!request.env.fetch("HTTP_AUTHORIZATION", "").scan(/Bearer/).flatten.first
+    !request
+      .env
+      .fetch("HTTP_AUTHORIZATION", "")
+      .scan(/Bearer/)
+      .flatten
+      .first
+      .nil?
   end
 
   def guest?

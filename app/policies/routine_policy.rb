@@ -20,5 +20,4 @@ class RoutinePolicy < ApplicationPolicy
       Routine.where(user_id: user.id).or(Routine.where(public: true))
     end
   end
-
 end

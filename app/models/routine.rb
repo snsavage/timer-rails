@@ -25,8 +25,8 @@ class Routine < ApplicationRecord
   accepts_nested_attributes_for :groups
 
   def total_duration
-    return 0 unless duration = routine_durations.first
+    duration = routine_durations.first
 
-    duration.total
+    duration ? duration.total : 0
   end
 end

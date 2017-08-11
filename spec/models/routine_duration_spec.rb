@@ -6,7 +6,7 @@
 #  total      :integer
 #
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe RoutineDuration, type: :model do
   it { should belong_to :routine }
@@ -44,6 +44,8 @@ RSpec.describe RoutineDuration, type: :model do
         number_of_intervals: 10,
         interval_duration: 20
       )
+
+      expect(routine.total_duration).to eq(duration)
     end
   end
 end
@@ -63,10 +65,10 @@ def routine_setup(routine_times: 1,
   end
 
   duration = routine_times *
-    number_of_groups *
-    group_times *
-    number_of_intervals *
-    interval_duration
+             number_of_groups *
+             group_times *
+             number_of_intervals *
+             interval_duration
 
   return routine, duration
 end
