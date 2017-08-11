@@ -201,4 +201,33 @@ RSpec.describe "Api::V1::Routines", type: :request do
       end
     end
   end
+
+  describe "#update" do
+    let(:url) { '/api/v1/routines' }
+
+    describe 'with a valid user' do
+      before(:each) {
+        @user = create(:user)
+        @headers = auth_headers(@user)
+      }
+
+      it 'updates a routine with no groups or intervals' do
+        routine = create(:routine, user: @user)
+        routine.name = "New Name"
+
+        patch "#{url}/#{routine.id}",
+          params: { routine: routine }.to_json,
+          headers: @headers
+
+        expect(response.status).to eq(202)
+        expect(Routine.find(routine.id).name).to eq("New Name")
+      end
+    end
+
+    describe "with an invalid user" do
+      it "does something" do
+        raise
+      end
+    end
+  end
 end

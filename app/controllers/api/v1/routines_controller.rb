@@ -26,6 +26,19 @@ class Api::V1::RoutinesController < ApplicationController
     end
   end
 
+  def update
+    routine = Routine.find(params[:id])
+    authorize routine
+
+    routine.update(routine_params)
+
+    if routine.save
+      render json: routine, include: ['groups.intervals'], status: 202
+    else
+      render json: {}, status: 400
+    end
+  end
+
   private
   def routine_params
     params.require(:routine).permit(
