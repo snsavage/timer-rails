@@ -17,7 +17,14 @@ class RoutineSerializer < ActiveModel::Serializer
   has_many :groups
   has_many :intervals, through: :groups
 
-  attributes :id, :name, :description, :link, :times, :user_id, :public, :duration
+  attributes :id,
+             :name,
+             :description,
+             :link,
+             :times,
+             :user_id,
+             :public,
+             :duration
 
   def duration
     @object.total_duration

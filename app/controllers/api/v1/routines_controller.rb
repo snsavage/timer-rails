@@ -40,6 +40,7 @@ class Api::V1::RoutinesController < ApplicationController
   end
 
   private
+
   def routine_params
     params.require(:routine).permit(
       :name, :description, :link, :public,

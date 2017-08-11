@@ -1,24 +1,56 @@
-# README
+# Timer Rails
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Timer Rails provides the API for my Timer React project.  Timer Rails is currently a work in progress.
 
-Things you may want to cover:
+Timer Rails was created as a project for the [ Flatiron School's Online Web
+Developer Program ](https://flatironschool.com/programs/online-web-developer-career-course).
 
-* Ruby version
+## Setup
 
-* System dependencies
+Local development for Rails Timer can be setup with the following steps. Please submit a bug report if these steps don't work for you.
 
-* Configuration
+You will need the following software:
 
-* Database creation
+* Git
+* Ruby v2.3.1
+* PostgreSQL
 
-* Database initialization
+After cloning this GitHub repo, don't forget to bundle install and run the
+database migrations.
 
-* How to run the test suite
+```bash
+$ git clone https://github.com/snsavage/timer-rails.git
+$ bundle install
+$ rake db:migrate
+$ rake db:migrate RAILS_ENV=test
+$ rails server
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+Seed data is available by running `rake db:seed`.
 
-* Deployment instructions
+## Testing
 
-* ...
+Timer Rails has a test suite built with rspec. The test suite can be run with
+the commands:
+
+```bash
+$ rspec              # OR
+$ bundle exec rspec  # Depending on your system configuration.
+```
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at
+[https://github.com/snsavage/timer-rails/issues](https://github.com/snsavage/timer-rails/issues).
+Please read the [Contributing Guide](./CONTRIBUTING.md).  This project is
+intended to be a safe, welcoming space for collaboration, and contributors are
+expected to adhere to the [Code of Conduct](./CODE_OF_CONDUCT.md).
+Questions?
+
+## Questions?
+
+Please contact [snsavage@snsavage.com](mailto:snsavage@snsavage.com).
+
+## License
+
+Rails Timer is released on the [MIT License](./LICENSE).
