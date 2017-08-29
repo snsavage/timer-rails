@@ -38,6 +38,26 @@ RSpec.describe Api::V1::UsersController, type: :request do
           expect(Auth.decode(@jwt["jwt"])["id"]).to eq(user.id)
         end
       end
+
+      context "returns user information" do
+        before(:each) do
+          post url, params: { user: params }.to_json, headers: headers
+          @response = JSON.parse(response.body)
+          @user = User.first
+        end
+
+        it "returns user id" do
+          expect(@response["id"]).to eq(@user.id)
+        end
+
+        it "returns user email" do
+          expect(@response["email"]).to eq(@user.email)
+        end
+
+        it "returns user first_name" do
+          expect(@response["name"]).to eq(@user.first_name)
+        end
+      end
     end
 
     context "with invalid credentials" do

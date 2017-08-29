@@ -10,7 +10,7 @@ RSpec.describe "Api::V1::Auths", type: :request do
         @user = create(:user)
         params = { email: @user.email, password: @user.password }
         post url, params: { auth: params }.to_json, headers: headers
-        @jwt = JSON.parse(response.body)
+        @response = JSON.parse(response.body)
       end
 
       it "responds with 201" do
@@ -18,15 +18,21 @@ RSpec.describe "Api::V1::Auths", type: :request do
       end
 
       it "returns a json object with a jwt key" do
-        expect(@jwt).to have_key("jwt")
+        expect(@response).to have_key("jwt")
       end
 
       it "returns jwt token that can be decoded" do
-        expect(Auth.decode(@jwt["jwt"])).to have_key("id")
+        expect(Auth.decode(@response["jwt"])).to have_key("id")
       end
 
       it "returns a jwt token with the correct user id" do
-        expect(Auth.decode(@jwt["jwt"])["id"]).to eq(@user.id)
+        expect(Auth.decode(@response["jwt"])["id"]).to eq(@user.id)
+      end
+
+      it "returns user id, email, and first_name" do
+        expect(@response["id"]).to eq(@user.id)
+        expect(@response["email"]).to eq(@user.email)
+        expect(@response["name"]).to eq(@user.first_name)
       end
     end
 

@@ -5,7 +5,13 @@ class Api::V1::UsersController < ApplicationController
     user = User.new(user_params)
     if user.save
       jwt = Auth.issue(user.jwt_payload)
-      render json: { jwt: jwt }, status: 201
+      response = {
+        jwt: jwt,
+        id: user.id,
+        email: user.email,
+        name: user.first_name
+      }
+      render json: response, status: 201
     else
       render json: { errors: user.errors.full_messages }, status: 422
     end
