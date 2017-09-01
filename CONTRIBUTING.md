@@ -15,6 +15,6 @@ If you would like to contribute code to the Timer Rails project, please submit a
 We will review your request as soon as possible.
 
 ## Not Sure Where to Start?
-If this is your first time contributing please don't hesitate!  All contributions are welcome.  If you're not sure where to begin, start by forking and cloning the repo and running the app locally.  If something doesn't work as expected or as documented, create a pull request for the README.  Issues are a great place to start as well.  If you have any questions please contact [snsavage@snsavage.com](mailto:snsavagesnsavage.com).
+If this is your first time contributing please don't hesitate!  All contributions are welcome.  If you're not sure where to begin, start by forking and cloning the repo and running the app locally.  If something doesn't work as expected or as documented, create a pull request for the README.  Issues are a great place to start as well.  If you have any questions please contact [snsavage@snsavage.com](mailto:snsavage@snsavage.com).
   
 Thank you for contributing!
