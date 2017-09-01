@@ -203,13 +203,13 @@ RSpec.describe "Api::V1::Routines", type: :request do
   describe "#update" do
     let(:url) { '/api/v1/routines' }
 
-    describe 'with a valid user' do
+    describe "with a valid user" do
       before(:each) {
         @user = create(:user)
         @headers = auth_headers(@user)
       }
 
-      it 'updates a routine with no groups or intervals' do
+      it "updates a routine with no groups or intervals" do
         routine = create(:routine, user: @user)
         routine.name = "New Name"
 
@@ -219,6 +219,22 @@ RSpec.describe "Api::V1::Routines", type: :request do
 
         expect(response.status).to eq(202)
         expect(Routine.find(routine.id).name).to eq("New Name")
+      end
+
+      it "updates a routine with groups" do
+        raise
+      end
+
+      it "removes groups from routine" do
+        raise
+      end
+
+      it "updates a routine with groups and intervals" do
+        raise
+      end
+
+      it "remove intervals from routine groups" do
+        raise
       end
     end
 
