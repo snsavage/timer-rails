@@ -327,4 +327,54 @@ RSpec.describe "Api::V1::Routines", type: :request do
       end
     end
   end
+
+  describe "#destroy" do
+    let(:url) { '/api/v1/routines' }
+
+    before(:each) do
+      @user = create(:user)
+      @headers = auth_headers(@user)
+    end
+
+    it "destroys user's routine" do
+      routine = create(:routine, user: @user)
+
+      expect  do
+        delete "#{url}/#{routine.id}", headers: @headers
+      end.to change { Routine.count }.by(-1)
+
+      expect(response.status).to eq(202)
+    end
+
+    it "associated groups and intervals are destroy with routine" do
+      routine = create(:routine, user: @user)
+      group = create(:group, routine: routine)
+      create(:interval, group: group)
+
+      delete "#{url}/#{routine.id}", headers: @headers
+
+      expect(response.status).to eq(202)
+      expect(Routine.count).to eq 0
+      expect(Group.count).to eq 0
+      expect(Interval.count).to eq 0
+    end
+
+    it "denies an unauthorized user" do
+      routine = create(:routine, user: @user)
+
+      unauthorized_user_headers = auth_headers(create(:user))
+
+      delete "#{url}/#{routine.id}", headers: unauthorized_user_headers
+
+      expect(response.status).to eq(403)
+    end
+
+    it "denies request without user" do
+      routine = create(:routine, user: @user)
+
+      delete "#{url}/#{routine.id}", headers: headers
+
+      expect(response.status).to eq(401)
+    end
+  end
 end

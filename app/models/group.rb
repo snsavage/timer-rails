@@ -12,7 +12,7 @@
 
 class Group < ApplicationRecord
   belongs_to :routine
-  has_many :intervals
+  has_many :intervals, dependent: :destroy
 
   accepts_nested_attributes_for :intervals
 

@@ -39,6 +39,17 @@ class Api::V1::RoutinesController < ApplicationController
     end
   end
 
+  def destroy
+    routine = Routine.find(params[:id])
+    authorize routine
+
+    if routine.destroy
+      render json: :no_content, status: 202
+    else
+      render json: {}, status: 400
+    end
+  end
+
   private
 
   def routine_params
