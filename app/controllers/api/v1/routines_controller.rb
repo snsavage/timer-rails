@@ -45,8 +45,8 @@ class Api::V1::RoutinesController < ApplicationController
     params.require(:routine).permit(
       :name, :description, :link, :public,
       groups_attributes: [
-        :order, :times, intervals_attributes: [
-          :name, :order, :duration
+        :id, :order, :times, intervals_attributes: [
+          :id, :name, :order, :duration
         ]
       ]
     )

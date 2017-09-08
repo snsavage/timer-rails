@@ -15,4 +15,19 @@ class Group < ApplicationRecord
   has_many :intervals
 
   accepts_nested_attributes_for :intervals
+
+  def intervals_attributes=(interval_attributes)
+    update_ids = interval_attributes.map { |x| x["id"] }
+    interval_ids = self.intervals.pluck(:id)
+
+    Interval.delete(interval_ids - update_ids)
+
+    interval_attributes.each do |attr|
+      interval = Interval.find_or_initialize_by(id: attr["id"])
+      interval.name = attr["name"]
+      interval.order = attr["order"]
+      interval.duration = attr["duration"]
+      self.intervals << interval
+    end
+  end
 end

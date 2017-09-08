@@ -4,6 +4,12 @@ module Requests
     def json
       @json ||= JSON.parse(response.body, symbolize_names: true)
     end
+
+    def serialize(resource, options = {})
+      ActiveModelSerializers::SerializableResource
+        .new(resource, options)
+        .serializable_hash
+    end
   end
 
   module RequestHelpers

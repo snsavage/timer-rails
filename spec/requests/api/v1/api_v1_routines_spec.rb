@@ -204,43 +204,126 @@ RSpec.describe "Api::V1::Routines", type: :request do
     let(:url) { '/api/v1/routines' }
 
     describe "with a valid user" do
-      before(:each) {
+      before(:each) do
         @user = create(:user)
         @headers = auth_headers(@user)
-      }
+      end
 
       it "updates a routine with no groups or intervals" do
         routine = create(:routine, user: @user)
         routine.name = "New Name"
 
         patch "#{url}/#{routine.id}",
-          params: { routine: routine }.to_json,
-          headers: @headers
+              params: { routine: routine }.to_json,
+              headers: @headers
 
         expect(response.status).to eq(202)
         expect(Routine.find(routine.id).name).to eq("New Name")
       end
 
       it "updates a routine with groups" do
-        raise
+        routine = create(:routine, user: @user)
+        create_list(:group, 1, routine: routine)
+
+        params = serialize(routine)
+        params[:routine][:groups][0][:times] = 2
+        params[:routine].merge!({ groups_attributes: params[:routine][:groups] })
+
+        patch "#{url}/#{routine.id}", params: params.to_json, headers: @headers
+
+        expect(response.status).to eq(202)
+        expect(Routine.count).to eq 1
+        expect(Routine.first.groups.count).to eq 1
+        expect(Routine.first.groups.first.times).to eq 2
       end
 
       it "removes groups from routine" do
-        raise
+        routine = create(:routine, user: @user)
+        groups = create_list(:group, 2, routine: routine)
+
+        params = serialize(routine)
+        params[:routine].merge!({
+          groups_attributes: [params[:routine][:groups][0]]
+        })
+
+        patch "#{url}/#{routine.id}", params: params.to_json, headers: @headers
+
+        expect(response.status).to eq(202)
+        expect(Routine.count).to eq 1
+        expect(Routine.first.groups.count).to eq 1
+        expect(Routine.first.groups.last.id).not_to eq groups.last.id
       end
 
       it "updates a routine with groups and intervals" do
-        raise
+        routine = create(:routine, user: @user)
+        group = create(:group, routine: routine)
+        interval = create(:interval, group: group)
+
+        options = { include: ['groups.intervals'] }
+        params = serialize(Routine.first, options)
+        params[:routine][:groups][0][:intervals][0][:name] = "Changed"
+
+        params.deep_transform_keys! do |key|
+          key = :groups_attributes if key == :groups
+          key = :intervals_attributes if key == :intervals
+          key
+        end
+
+        patch "#{url}/#{routine.id}", params: params.to_json, headers: @headers
+
+        expect(response.status).to eq(202)
+        expect(Routine.count).to eq 1
+        expect(Routine.first.groups.count).to eq 1
+        expect(Routine.first.groups.first.intervals.count).to eq 1
+        expect(Routine.first.groups.first.intervals.first.name).to eq "Changed"
       end
 
       it "remove intervals from routine groups" do
-        raise
+        routine = create(:routine, user: @user)
+        group = create(:group, routine: routine)
+        intervals = create_list(:interval, 2, group: group)
+
+        options = { include: ['groups.intervals'] }
+        params = serialize(Routine.first, options)
+        params[:routine][:groups][0][:intervals] = [
+          params[:routine][:groups][0][:intervals][0]
+        ]
+
+        params.deep_transform_keys! do |key|
+          key = :groups_attributes if key == :groups
+          key = :intervals_attributes if key == :intervals
+          key
+        end
+
+        patch "#{url}/#{routine.id}", params: params.to_json, headers: @headers
+
+        expect(response.status).to eq(202)
+        expect(Routine.count).to eq 1
+        expect(Routine.first.groups.count).to eq 1
+        expect(Routine.first.groups.first.intervals.count).to eq 1
       end
     end
 
     describe "with an invalid user" do
-      it "does something" do
-        raise
+      it "requires an authenticated user" do
+        routine = create(:routine)
+
+        patch "#{url}/#{routine.id}",
+          params: serialize(routine).to_json, headers: headers
+
+        expect(response.status).to eq(401)
+      end
+
+      it "requires an authorized user" do
+        user = create(:user)
+        headers = auth_headers(user)
+
+        routine = create(:routine)
+
+        patch "#{url}/#{routine.id}",
+          params: serialize(routine).to_json, headers: headers
+
+        expect(response.status).to eq(403)
       end
     end
   end

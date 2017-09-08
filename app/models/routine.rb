@@ -29,4 +29,22 @@ class Routine < ApplicationRecord
 
     duration ? duration.total : 0
   end
+
+  def groups_attributes=(group_attributes)
+    update_ids = group_attributes.map { |x| x["id"] }
+    group_ids = self.groups.pluck(:id)
+
+    Group.delete(group_ids - update_ids)
+
+    group_attributes.each do |attr|
+      group = Group.find_or_initialize_by(id: attr["id"])
+      intervals = attr["intervals_attributes"]
+
+      group.order = attr["order"]
+      group.times = attr["times"]
+      group.intervals_attributes = intervals if intervals
+
+      self.groups << group
+    end
+  end
 end
