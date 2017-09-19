@@ -17,12 +17,15 @@ class Group < ApplicationRecord
   accepts_nested_attributes_for :intervals
 
   def intervals_attributes=(interval_attributes)
+    interval_attributes.map! { |x| x.stringify_keys }
     update_ids = interval_attributes.map { |x| x["id"] }
     interval_ids = self.intervals.pluck(:id)
 
     Interval.delete(interval_ids - update_ids)
 
     interval_attributes.each do |attr|
+      attr["id"] = nil if attr["id"].to_s.match(/[A-Za-z\-]+/)
+
       interval = Interval.find_or_initialize_by(id: attr["id"])
       interval.name = attr["name"]
       interval.order = attr["order"]

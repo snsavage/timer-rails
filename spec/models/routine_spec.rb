@@ -44,4 +44,26 @@ RSpec.describe Routine, type: :model do
       expect(routine.total_duration).to eq(interval.duration)
     end
   end
+
+  describe ".groups_attributes" do
+    it "prevents uuids.to_i from colliding with existing ids" do
+      @user = create(:user)
+      routine = create(:routine, user: @user)
+      group = create(:group, routine: routine)
+      attr = attributes_for(:group, routine: routine)
+
+      group_attributes = [
+        {
+          "id": group.id,
+        },
+        {
+          "id": "#{group.id.to_s}-uuid",
+        }
+      ]
+
+      routine.groups_attributes = group_attributes
+
+      expect(routine.groups.count).to eq 2
+    end
+  end
 end

@@ -31,12 +31,15 @@ class Routine < ApplicationRecord
   end
 
   def groups_attributes=(group_attributes)
+    group_attributes.map! { |x| x.stringify_keys }
     update_ids = group_attributes.map { |x| x["id"] }
     group_ids = self.groups.pluck(:id)
 
     Group.delete(group_ids - update_ids)
 
     group_attributes.each do |attr|
+      attr["id"] = nil if attr["id"].to_s.match(/[A-Za-z\-]+/)
+
       group = Group.find_or_initialize_by(id: attr["id"])
       intervals = attr["intervals_attributes"]
 
