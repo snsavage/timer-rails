@@ -21,6 +21,7 @@ database migrations.
 ```bash
 $ git clone https://github.com/snsavage/timer-rails.git
 $ bundle install
+$ rake db:create
 $ rake db:migrate
 $ rake db:migrate RAILS_ENV=test
 $ rails server

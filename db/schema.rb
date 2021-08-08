@@ -15,12 +15,6 @@ ActiveRecord::Schema.define(version: 20170714171721) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "ar_internal_metadata", primary_key: "key", id: :string, force: :cascade do |t|
-    t.string "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "groups", force: :cascade do |t|
     t.integer "routine_id"
     t.integer "order", default: 1
@@ -42,8 +36,8 @@ ActiveRecord::Schema.define(version: 20170714171721) do
 
   create_table "routines", force: :cascade do |t|
     t.string "name"
-    t.text "description", default: "", null: false
-    t.string "link", default: "", null: false
+    t.text "description", default: ""
+    t.string "link", default: ""
     t.integer "times", default: 1
     t.integer "user_id"
     t.datetime "created_at", null: false
@@ -62,7 +56,7 @@ ActiveRecord::Schema.define(version: 20170714171721) do
   end
 
 
-  create_view :routine_durations,  sql_definition: <<-SQL
+  create_view "routine_durations", sql_definition: <<-SQL
       SELECT routines.id AS routine_id,
       sum(((groups.times * intervals.duration) * routines.times)) AS total
      FROM ((routines
@@ -70,5 +64,4 @@ ActiveRecord::Schema.define(version: 20170714171721) do
        JOIN intervals ON ((groups.id = intervals.group_id)))
     GROUP BY routines.id, routines.name;
   SQL
-
 end

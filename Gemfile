@@ -30,9 +30,7 @@ group :development do
 end
 
 group :test do
-  gem 'shoulda-matchers',
-    git: 'https://github.com/thoughtbot/shoulda-matchers.git',
-    branch: 'rails-5'
+  gem "shoulda-matchers", "~> 4.0.0"
   gem "factory_girl_rails", "~> 4.0"
   gem "faker"
   gem "json-schema"
